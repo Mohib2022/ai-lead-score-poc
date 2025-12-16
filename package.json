@@ -11,6 +11,10 @@
     "ai-lead-score-poc"
   ],
   "author": "Sheikh Mohib",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Mohib2022/ai-lead-score-poc.git"
+  },
   "files": [
     "dist"
   ],
