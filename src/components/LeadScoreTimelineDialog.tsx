@@ -12,7 +12,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import React, { type ComponentType } from "react";
 import LeadScoreTimeline from "./LeadScoreTimeline";
-import type { timelinePositions, timelineTypes } from "../lib/utils";
+import type { timelineTypes } from "../lib/utils";
 import ErrorAlert from "./Alert/ErrorAlert";
 interface LeadScoreTimelineDialogProps {
   DialogInitiator: ComponentType<{
@@ -38,6 +38,7 @@ interface LeadScoreTimelineDialogProps {
   }>;
   studentId: string;
   apiKey: string;
+  dialogTitle?: string;
 }
 
 function LeadScoreTimelineDialog({
@@ -46,13 +47,12 @@ function LeadScoreTimelineDialog({
   apiKey,
   studentId,
   CustomTimeline,
+  dialogTitle,
 }: LeadScoreTimelineDialogProps) {
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [timelineType, setTimelineType] =
     React.useState<timelineTypes>("timeline");
-  const [timelinePosition, setTimelinePosition] =
-    React.useState<timelinePositions>("alternate");
 
   const [data, setData] = React.useState<
     | []
@@ -114,13 +114,13 @@ function LeadScoreTimelineDialog({
             <Dialog
               maxWidth="md"
               fullWidth
-              PaperProps={{ sx: { borderRadius: 4 } }}
+              PaperProps={{ sx: { borderRadius: 2.5 } }}
               open={open}
               onClose={() => setOpen(false)}
             >
               <DialogTitle>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-                  Lead Score Timeline
+                  {dialogTitle || "Lead Score Timeline"}
                   <IconButton>
                     <CloseIcon onClick={() => setOpen(false)} />
                   </IconButton>
@@ -153,39 +153,13 @@ function LeadScoreTimelineDialog({
                         />
                       )}
                     />
-                    {(timelineType === "timeline" || !timelineType) && (
-                      <Autocomplete
-                        size="small"
-                        sx={{ width: 200, mb: 2 }}
-                        options={[
-                          "alternate",
-                          "alternate-reverse",
-                          "left",
-                          "right",
-                        ]}
-                        value={timelinePosition}
-                        onChange={(_, newValue) => {
-                          setTimelinePosition(newValue as timelinePositions);
-                        }}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            label="Timeline Position"
-                            variant="outlined"
-                            color="info"
-                          />
-                        )}
-                      />
-                    )}
                   </Box>
                 )}
                 <LeadScoreTimeline
                   apiKey={apiKey}
                   studentId={studentId}
                   timelineType={timelineType ? timelineType : "timeline"}
-                  timelinePosition={
-                    timelinePosition ? timelinePosition : "alternate"
-                  }
+                  timelinePosition={"alternate"}
                   CustomTimeline={CustomTimeline}
                 />
               </DialogContent>
@@ -194,6 +168,7 @@ function LeadScoreTimelineDialog({
                   variant="contained"
                   color="info"
                   onClick={() => setOpen(false)}
+                  sx={{ borderRadius: 5 }}
                 >
                   Close
                 </Button>

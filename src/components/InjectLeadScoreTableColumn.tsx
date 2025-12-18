@@ -2,6 +2,9 @@ import { useEffect, type ComponentType } from "react";
 import { createRoot } from "react-dom/client";
 import ShowSingleLeadScore from "./ShowSingleLeadScore";
 import ErrorAlert from "./Alert/ErrorAlert";
+import { returnMaxUsedClass } from "./HelperFunctions/HelperFunctions";
+import { useTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 
 interface InjectLeadScoreTableColumnProps {
   tableId: string;
@@ -26,6 +29,7 @@ function InjectLeadScoreTableColumn({
   headerName,
   apiKey,
 }: InjectLeadScoreTableColumnProps) {
+  const theme = useTheme();
   useEffect(() => {
     const table = document.getElementById(tableId) as HTMLTableElement | null;
     if (!table) return;
@@ -35,12 +39,13 @@ function InjectLeadScoreTableColumn({
 
     if (!headerRow || bodyRows.length === 0) return;
 
-    const existingTh = headerRow.querySelector("th");
-    const commonThClass = existingTh?.className ?? "";
+    const existingTh = headerRow.querySelectorAll("th");
+
+    const commonThClass = returnMaxUsedClass(existingTh);
 
     const firstBodyRow = bodyRows[0];
-    const existingTd = firstBodyRow.querySelector("td");
-    const commonTdClass = existingTd?.className ?? "";
+    const existingTd = firstBodyRow.querySelectorAll("td");
+    const commonTdClass = returnMaxUsedClass(existingTd);
 
     /* ---------------- HEADER ---------------- */
 
@@ -76,11 +81,13 @@ function InjectLeadScoreTableColumn({
 
       const cellRoot = createRoot(td);
       cellRoot.render(
-        <ShowSingleLeadScore
-          CustomComponent={CustomComponent}
-          apiKey={apiKey}
-          studentId={studentIds[rowIndex]}
-        />
+        <ThemeProvider theme={theme}>
+          <ShowSingleLeadScore
+            CustomComponent={CustomComponent}
+            apiKey={apiKey}
+            studentId={studentIds[rowIndex]}
+          />
+        </ThemeProvider>
       );
     });
   }, [
@@ -90,6 +97,7 @@ function InjectLeadScoreTableColumn({
     headerName,
     CustomComponent,
     apiKey,
+    theme,
   ]);
   if (apiKey !== "https://www.demoapi.com") {
     return <ErrorAlert apiKey={apiKey} />;
