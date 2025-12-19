@@ -2,7 +2,7 @@ import TimelineCardSkeleton from "./TimelineCardSkeleton";
 import TimelineSkeleton from "./TimelineSkeleton";
 import TimelineTableSkeleton from "./TimelineTableSkeleton";
 interface ScoreSkeletonProps {
-  timelineType: "table" | "card" | "timeline";
+  timelineType: "table" | "card" | "timeline" | undefined;
   timelinePosition?: "left" | "right" | "alternate" | "alternate-reverse";
   classes?: {
     timeline: string;

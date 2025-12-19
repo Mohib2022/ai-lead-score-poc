@@ -121,8 +121,11 @@ function LeadScoreTimelineDialog({
               <DialogTitle>
                 <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                   {dialogTitle || "Lead Score Timeline"}
-                  <IconButton>
-                    <CloseIcon onClick={() => setOpen(false)} />
+                  <IconButton
+                    onClick={() => setOpen(false)}
+                    data-testid="close-icon"
+                  >
+                    <CloseIcon />
                   </IconButton>
                 </Box>
               </DialogTitle>
@@ -158,7 +161,7 @@ function LeadScoreTimelineDialog({
                 <LeadScoreTimeline
                   apiKey={apiKey}
                   studentId={studentId}
-                  timelineType={timelineType ? timelineType : "timeline"}
+                  timelineType={timelineType}
                   timelinePosition={"alternate"}
                   CustomTimeline={CustomTimeline}
                 />

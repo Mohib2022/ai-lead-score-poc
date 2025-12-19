@@ -48,7 +48,12 @@ function ShowSingleLeadScore({
       ) : (
         <>
           {loading ? (
-            <Skeleton variant="circular" width={25} height={25} />
+            <Skeleton
+              data-testid="lead-score-skeleton"
+              variant="circular"
+              width={25}
+              height={25}
+            />
           ) : (
             <ScoreChip score={leadScore} />
           )}

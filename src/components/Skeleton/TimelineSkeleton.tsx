@@ -17,7 +17,7 @@ function TimelineSkeleton({
   className,
 }: TimelineSkeletonProps) {
   return (
-    <Timeline position={timelinePosition}>
+    <Timeline data-testid="timeline-skeleton" position={timelinePosition}>
       {Array.from({ length: 2 }).map((_, i) => (
         <TimelineItem key={i}>
           <TimelineSeparator>

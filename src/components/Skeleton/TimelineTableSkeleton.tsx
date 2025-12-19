@@ -20,6 +20,7 @@ function TimelineTableSkeleton({ className }: TimelineTableSkeletonProps) {
         borderRadius: "10px",
       }}
       className={className}
+      data-testid="table-skeleton"
     >
       <Table>
         <TableHead>
